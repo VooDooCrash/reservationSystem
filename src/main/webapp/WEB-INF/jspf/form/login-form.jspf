@@ -1,0 +1,33 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		Login
+	</div>
+
+	<div class="container panel-body">
+		<form action="${ctx}login" method="post" focus="name" name="loginForm">
+
+			<div class="form-group">
+				<label for="email">
+					<spring:message code="label.user.email" />
+				</label>
+				<input class="form-control" name="email" styleId="email" />
+			</div>
+
+			<div class="form-group">
+				<label for="password">
+					<spring:message code="label.user.password" />
+				</label>
+				<input type="password" class="form-control" name="password" styleId="password"/>
+			</div>
+
+			<button class="btn btn-success btn-xs">
+					<spring:message code="btn.login" />
+			</button>
+
+		</html:form>
+	</div>
+</div>

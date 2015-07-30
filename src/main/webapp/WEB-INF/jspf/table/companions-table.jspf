@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
+
+<div class="panel panel-default">
+	<div class="panel-heading">Companions</div>
+	<div class="container panel-body">
+		<display:table class="table table-condensed table-striped"
+			name="${ReservationForm.companionsList}" id="item"
+			requestURI="${ctx}reservation-details.do">
+
+			<!-- 			Table Properties -->
+			<display:setProperty name="basic.msg.empty_list"
+				value="There is no companions for this reservation" />
+
+			<!-- 			Table Columns -->
+
+			<display:column property="firstName" title="First Name"
+				sortable="true" />
+			<display:column property="lastName" title="Last Name" sortable="true" />
+			
+			<display:column>
+				<button class="btn btn-danger btn-xs"
+					onclick="removeCompanion(${item.id});">Remove</button>
+			</display:column>
+		</display:table>
+
+		<form id="remove-companion-form" action="${ctx}remove-companion.do"
+			method="post" hidden="true" style="margin-bottom: 0em;">
+			<input type="hidden" id="companionId" name="companionId"> 
+			<input type="hidden" name="id" value="${param.id}">
+		</form>
+		
+		<script type="text/javascript">
+			function removeCompanion(id) {
+				document.getElementById('companionId').value = id;
+				document.getElementById('remove-companion-form').submit();
+			}
+		</script>
+		
+	</div>
+</div>
+

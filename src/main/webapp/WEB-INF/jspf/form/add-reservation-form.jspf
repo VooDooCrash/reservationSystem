@@ -1,0 +1,131 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<div class="panel panel-default" style="width: 50%">
+	<div class="panel-heading">
+		<spring:message code="title.reservation.add" />
+	</div>
+
+	<div class="container panell-body">
+		<html:form action="${ctx}add-reservation" method="post">
+
+			<p class="text-danger" style="padding-top: 10px">
+				<html:errors />
+			</p>
+			<p class="text-danger">
+				<form:errors path="userId" />
+			</p>
+			<shiro:hasRole name="Admin">
+				<div class="form-group">
+					<label for="userId"><bean:message
+							key="label.reserv.user.id" /></label>
+					<html:select class="select2" property="userId"
+						style="width: 99%" name="ReservationForm">
+						<c:forEach items="${allUsersList}" var="user">
+							<html:option value="${user.id}">${user.firstName} ${user.lastName}</html:option>
+						</c:forEach>
+					</html:select>
+				</div>
+			</shiro:hasRole>
+			<shiro:lacksRole name="Admin">
+				<div class="form-group">
+					<html:hidden property="userId" class="form-control"
+						value="${loggedInUser.id}" />
+				</div>
+			</shiro:lacksRole>
+
+			<p class="text-danger">
+				<form:errors path="startTime" />
+			</p>
+			<div class="form-group">
+				<label for="startTime"><bean:message
+						key="label.reserv.starttime" /></label>
+				<input class="form-control date-time-picker"
+					property="startTime" name="ReservationForm" />
+			</div>
+
+
+			<p class="text-danger">
+				<form:errors path="endTime" />
+			</p>
+			<div class="form-group">
+				<label for="endTime"><bean:message
+						key="label.reserv.endtime" /></label>
+				<input class="form-control date-time-picker"
+					property="endTime" name="ReservationForm" />
+			</div>
+
+			<div class="form-group">
+				<label for="allDay"><spring:message code="label.reserv.allday" /></label>
+				<html:checkbox property="allDay" />
+			</div>
+
+			<div class="form-group">
+				<label for="repeat"><spring:message code="label.reserv.repeat" /></label>
+				<html:select class="form-control" property="repeat"
+					name="ReservationForm">
+					<html:option value="0">None</html:option>
+					<html:option value="1">Daily</html:option>
+					<html:option value="2">Weekly</html:option>
+					<html:option value="3">Monthly</html:option>
+					<html:option value="4">Yearly</html:option>
+				</html:select>
+			</div>
+
+			<div class="form-group">
+				<label for="reminderTime"><bean:message
+						key="label.reserv.reminder" /></label>
+				<html:checkbox property="reminder" />
+				<input class="form-control" styleId="reminderTime"
+					property="reminderTime" name="ReservationForm" />
+				<p>minutes before reservation's start</p>
+			</div>
+
+			<div class="form-group">
+				<label for="companions"><bean:message
+						key="label.reserv.companions" /></label>
+				<html:select class="select2" property="companions"
+					style="width: 99%" name="ReservationForm" multiple="true">
+					<c:forEach items="${allUsersList}" var="user">
+						<html:option value="${user.id}">${user.firstName} ${user.lastName}</html:option>
+					</c:forEach>
+				</html:select>
+			</div>
+
+			<div class="form-group">
+				<label for="description"><bean:message
+						key="label.reserv.description" /></label>
+				<inputarea class="form-control" rows="3"
+					property="description" name="ReservationForm" />
+			</div>
+
+
+			<html:hidden property="resourceId" name="ReservationForm"
+				value="${param.id}" />
+
+			<button type="submit" class="btn btn-success btn-xs">
+				<spring:message code="btn.add" />
+			</button type="submit">
+
+			<a href="${ctx}reservations.do?id=${param.id}">
+				<button type="button" class="btn btn-danger btn-xs">
+					<spring:message code="btn.cancel" />
+				</button>
+			</a>
+		</html:form>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(".date-time-picker").datetimepicker({
+		stepMinute : 5,
+		dateFormat : "dd/mm/yy",
+		timeFormat : "HH:mm",
+		constrainInput: false
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".select2").select2();
+	});
+</script>

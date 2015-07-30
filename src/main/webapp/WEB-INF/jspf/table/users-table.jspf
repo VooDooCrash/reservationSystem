@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">Users Table</div>
+	<div class="container panel-body">
+		<display:table class="table table-condensed table-striped"
+			name="${usersList}" id="item" requestURI="${ctx}users">
+
+			<!-- 			Table Properties -->
+			<display:setProperty name="basic.msg.empty_list"
+				value="There is no users" />
+
+			<!-- 			Table Columns -->
+
+			<display:column property="firstName" title="First Name"
+				sortable="true" />
+			<display:column property="lastName" title="Last Name" sortable="true" />
+			<display:column property="email" title="Email" sortable="true" />
+			<display:column title="Role" sortable="true">${item.role.name}</display:column>
+			<display:column>
+				<a href="${ctx}user/${item.id}">
+					<button type="button" class="btn btn-info btn-xs">Details</button>
+				</a>
+			</display:column>
+		</display:table>
+	</div>
+</div>

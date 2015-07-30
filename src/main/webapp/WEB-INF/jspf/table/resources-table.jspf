@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="btn"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">Resources Table</div>
+	<div class="container panel-body">
+		<display:table class="table table-condensed table-striped"
+			name="${resourcesList}" id="item" requestURI="${ctx}resources.do">
+
+			<!-- 			Table Properties -->
+			<display:setProperty name="basic.msg.empty_list"
+				value="There is no resources" />
+
+			<!-- 			Table Columns -->
+
+			<display:column property="name" title="Name" sortable="true" />
+
+			<display:column>
+				<a href="${ctx}reservations.do?id=${item.id}"><button
+						class="btn btn-info btn-xs">Reservations</button></a>
+				</a>
+			</display:column>
+
+			<display:column>
+				<a href="${ctx}show-resource-details.do?id=${item.id}"><button
+						class="btn btn-info btn-xs">Details</button></a>
+				</a>
+			</display:column>
+		</display:table>
+	</div>
+</div>

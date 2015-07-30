@@ -1,0 +1,48 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		<logic:equal name="action" value="edit">
+			<spring:message code="title.role.edit" />
+		</logic:equal>
+		<logic:notEqual name="action" value="edit">
+			<spring:message code="title.role.add" />
+		</logic:notEqual>
+	</div>
+
+	<div class="container panell-body">
+		<html:form action="${ctx}${action=='edit' ? '/edit-role' : '/add-role'}"
+			method="post" focus="name">
+
+			<p class="text-danger">
+				<form:errors path="name" />
+			</p>
+			<div class="form-group">
+				<label for="name"><spring:message code="label.role.name" /></label>
+				<input class="form-control" property="name"
+					name="${ action == 'edit' ? 'EditRoleForm' : 'AddRoleForm' }" />
+			</div>
+
+			<html:hidden property="id"
+				name="${action == 'edit' ? 'EditRoleForm' : 'AddRoleForm'}"
+				value="${param.id}" />
+
+			<button type="submit" class="btn btn-success btn-xs">
+				<logic:equal name="action" value="edit">
+					<spring:message code="btn.edit" />
+				</logic:equal>
+				<logic:notEqual name="action" value="edit">
+					<spring:message code="btn.add" />
+				</logic:notEqual>
+			</button type="submit">
+
+			<a href="${ctx}${action == 'edit' ? 'show-role-details.do?id='.concat(param.id) : 'roles.do'}">
+				<button type="button" class="btn btn-danger btn-xs">
+					<spring:message code="btn.cancel" />
+				</button>
+			</a>
+
+		</html:form>
+	</div>
+</div>
